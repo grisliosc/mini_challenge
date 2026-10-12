@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Query } from '@nestjs/common';
+import { Controller, Post, Body, Param, Query, BadRequestException } from '@nestjs/common';
 import { KasirService } from './kasir.service.js';
 import { CheckoutDto } from './dto/checkout.dto.js';
 
@@ -6,12 +6,30 @@ import { CheckoutDto } from './dto/checkout.dto.js';
 export class KasirController {
   constructor(private readonly kasirService: KasirService) {}
 
-  @Post('checkout')
+  @Post('checkout/:member')
   checkout(
-    @Query('member') member: string,
+    @Param('member') member: string,
     @Query('metode') metode: string,
-    @Body() body: CheckoutDto, // <-- PAS TIKAN ADA @Body() DI SINI
+    @Body() body: CheckoutDto,
   ) {
-    return this.kasirService.checkout(member, metode, body);
+    // Validasi member di params
+    if (!member) {
+      throw new BadRequestException('Member wajib diisi di URL');
+    }
+    const normalizedMember = member.toLowerCase();
+    if (!['reguler', 'silver', 'gold'].includes(normalizedMember)) {
+      throw new BadRequestException('Member harus reguler, silver, atau gold');
+    }
+
+    // Validasi metode di query
+    if (!metode) {
+      throw new BadRequestException('Metode pembayaran wajib diisi di query (?metode=...)');
+    }
+    const normalizedMetode = metode.toLowerCase();
+    if (!['tunai', 'qris'].includes(normalizedMetode)) {
+      throw new BadRequestException('Metode harus tunai atau qris');
+    }
+
+    return this.kasirService.checkout(normalizedMember, normalizedMetode, body);
   }
 }

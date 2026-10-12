@@ -1,11 +1,6 @@
 import { Transform, Type } from 'class-transformer';
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsIn, IsInt, IsNumber, IsString, Min, ValidateNested } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsInt, IsNumber, IsString, Min, ValidateNested } from 'class-validator';
 
-export class CheckoutQueryDto {
-  @Transform(({ value }) => typeof value === 'string' ? value.toLowerCase() : value)
-  @IsIn(['tunai', 'qris'], { message: 'Metode harus tunai atau qris' })
-  metode: string;
-}
 export class ItemCheckoutDto {
   @IsString({ message: 'Nama item harus berupa teks' })
   @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
@@ -21,6 +16,7 @@ export class ItemCheckoutDto {
   @Min(1, { message: 'Qty harus bilangan bulat lebih dari 0' })
   qty: number;
 }
+
 export class CheckoutDto {
   @IsArray({ message: 'Items harus berupa array' })
   @ArrayMinSize(1, { message: 'Items minimal berisi 1 item' })

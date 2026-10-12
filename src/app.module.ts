@@ -9,9 +9,10 @@ import { BilanganModule } from './bilangan/bilangan.module.js';
 import { SuhuModule } from './suhu/suhu.module.js';
 import { DeretModule } from './deret/deret.module.js';
 import { NilaiModule } from './nilai/nilai.module.js'; 
+import { KasirModule } from './kasir/kasir.module.js';
 
 @Module({
-  imports: [ConvertModule, ShopModule, AcademicModule, UtilityModule, BilanganModule, SuhuModule, DeretModule, NilaiModule],
+  imports: [ConvertModule, ShopModule, AcademicModule, UtilityModule, BilanganModule, SuhuModule, DeretModule, NilaiModule, KasirModule],
   controllers: [AppController],
   providers: [AppService],
 })

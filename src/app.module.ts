@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { ConvertModule } from './convert/convert.module.js';
+import { ShopModule } from './shop/shop.module.js';
+import { AcademicModule } from './academic/academic.module.js';
+import { UtilityModule } from './utility/utility.module.js';
+import { BilanganModule } from './bilangan/bilangan.module.js';
+import { SuhuModule } from './suhu/suhu.module.js';
+import { DeretModule } from './deret/deret.module.js';
+import { NilaiModule } from './nilai/nilai.module.js'; 
 
 @Module({
-  imports: [],
+  imports: [ConvertModule, ShopModule, AcademicModule, UtilityModule, BilanganModule, SuhuModule, DeretModule, NilaiModule],
   controllers: [AppController],
   providers: [AppService],
 })
